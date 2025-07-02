@@ -4,7 +4,6 @@ const logger = require("morgan");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const userRouter = require("./routes/userRouter");
-const { pool } = require("./olddb"); // Importa la conexión a la base de datos
 const productRouter = require("./routes/productRouter");
 
 dotenv.config();
@@ -20,12 +19,11 @@ app.use(cors());
 
 app.use("/users", userRouter);
 app.use("/products", productRouter);
+
 const main = async () => {
   try {
-    // Test the database connection
-    await pool.getConnection();
-    console.log("Database connected!");
-
+    // Ya no necesitas probar la conexión aquí si tus DAOs la usan directamente
+    console.log("Starting server...");
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
